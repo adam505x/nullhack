@@ -18,5 +18,11 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vitest/globals", "@testing-library/jest-dom", "node"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/download-uniqlo-images.ts",
+    "src/uniqlo-categorizer.ts",
+    "src/uniqlo-cli.ts",
+    "src/uniqlo-importer.ts"
+  ]
 }

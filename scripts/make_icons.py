@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "public" / "artem" / "idle.png"
+SRC = ROOT / "public" / "artem" / "idle.webp"
 OUT = ROOT / "extension" / "icons"
 
 # square crop around the head + turban of the idle pose (853x1280 source)

@@ -30,6 +30,8 @@ the time, median 8 questions** (`node --experimental-strip-types scripts/stats.m
   office-ok, night-out, fit, luxe…) were manufactured with Claude and live in
   `scripts/subjective-overrides.json`, merged over heuristic defaults.
 - Catalog photos are retail catalog images — fine for a demo, not for shipping.
+- Runtime catalog and mascot assets are stored as WebP to keep the app and
+  extension bundle small.
 
 ## Run it
 
@@ -40,7 +42,7 @@ npm test           # engine convergence + catalog integrity + full UI flow
 npm run build      # production build
 ```
 
-## Run it as a Chrome extension (on Uniqlo)
+## Run it as a Chrome extension (on UNIQLO)
 
 ```sh
 npm run build:ext  # builds the app + assembles dist/ as an unpacked extension
@@ -53,18 +55,50 @@ the screen with the site dimmed behind it (Esc, the ×, or the backdrop close it
 Everything — engine, catalog, images, fonts — is bundled, so it works offline.
 `node scripts/ext-check.mjs` re-verifies the whole flow in a real browser.
 
-Rebuild the catalog from scratch: `npm run catalog -- fetch`, review, then
-`npm run catalog -- build`.
+Rebuild the original catalog from scratch: `npm run catalog -- fetch`, review,
+then `npm run catalog -- build`.
+
+## UNIQLO catalog pipeline
+
+The repository also includes a sitemap-based importer for UNIQLO's English US
+adult catalog. It keeps women's and men's products while excluding kids, baby,
+and unrelated URLs.
+
+```sh
+npm run import:uniqlo -- --output ./data
+npm run download:uniqlo-images -- --output ./data
+npm run categorize:uniqlo
+npm run test:uniqlo
+npm run typecheck:uniqlo
+```
+
+Use `--limit 100` for a smoke import. `--refresh`, `--delay-ms`,
+`--timeout-ms`, `--retries`, and `--concurrency` control cache and request
+behavior. The default is two simultaneous requests.
+
+The sitemap is the source of truth. When sitemap image mappings are unavailable,
+the importer requests only discovered product pages and reads their embedded
+product data. Generated files include:
+
+- `data/uniqlo-products.jsonl`: normalized product records.
+- `data/uniqlo-products.csv`: product-to-image mappings.
+- `data/uniqlo-images/`: deduplicated downloaded assets.
+- `data/uniqlo-images-manifest.json`: source and local image mappings.
+- `data/uniqlo-catalogue-categorized.jsonl`: engine-ready attribute weights.
+
+The full catalog can require thousands of files and substantial disk space.
+Retrieved catalog data and images are for prototype/research use only; ensure
+your use complies with UNIQLO's terms, robots guidance, applicable law, and
+image rights.
 
 ## Repo map
 
 - `src/engine/` — the Bayesian / information-gain engine (framework-free TS)
 - `src/App.tsx`, `src/styles.css` — the UI (React + Vite): Akinator-style scene
-  (full-body genie left, speech-bubble prompt, bordered answer list) in a flat
-  white minimalist style; opens directly on question 1
+  with a full-body genie, speech-bubble prompt, and bordered answer list
 - `src/data/catalog.json` — generated item catalog with attribute vectors
+- `src/uniqlo-*.ts` — UNIQLO import and categorization pipeline
 - `scripts/build-catalog.mjs` — HuggingFace → catalog pipeline
-- `scripts/clean_mascots.py`, `scripts/mascot_alpha.py` — mascot background
-  cleanup → transparent PNGs (PIL)
-- `scripts/screenshot.mjs` — real-browser visual smoke test (Edge via playwright-core)
-- `public/artem/` — the genie's five moods
+- `scripts/clean_mascots.py`, `scripts/mascot_alpha.py` — mascot cleanup tools
+- `scripts/screenshot.mjs` — real-browser visual smoke test (Chrome/Edge via playwright-core)
+- `public/artem/` — the genie's five WebP moods

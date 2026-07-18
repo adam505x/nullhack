@@ -87,7 +87,7 @@ export default function App() {
         className="genie"
         data-testid="mascot"
         data-pose={pose}
-        src={`/artem/${pose}.png`}
+        src={`/artem/${pose}.webp`}
         alt="The Artemator genie"
       />
 

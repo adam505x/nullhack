@@ -2,7 +2,7 @@
 //
 //   node scripts/build-catalog.mjs fetch   -> pull + curate candidates from HuggingFace, cache locally
 //   node scripts/build-catalog.mjs build   -> download images, derive attributes, merge overrides,
-//                                             write src/data/catalog.json + public/items/*.jpg
+//                                             write src/data/catalog.json + public/items/*.webp
 //
 // Data source: benitomartin/fashion-product-images-small-900x1200 (mirror of the
 // Kaggle "Fashion Product Images" dataset with 900x1200 images). Objective
@@ -12,6 +12,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -207,15 +208,29 @@ async function cmdBuild() {
   for (const c of candidates) {
     const skip = overrides[String(c.id)]?.__skip;
     if (skip) continue;
-    const file = `${c.id}.jpg`;
+    const file = `${c.id}.webp`;
     const dest = path.join(ITEMS_DIR, file);
     if (!fs.existsSync(dest)) {
+      const source = `${dest}.source`;
       try {
-        const bytes = await download(c.imageSrc, dest);
+        const bytes = await download(c.imageSrc, source);
+        execFileSync("cwebp", [
+          "-quiet",
+          "-q",
+          "78",
+          "-m",
+          "6",
+          "-mt",
+          source,
+          "-o",
+          dest,
+        ]);
         console.log(`img ${c.id} (${Math.round(bytes / 1024)} KB) ${c.name}`);
       } catch (e) {
         console.warn(`SKIP ${c.id} — image download failed: ${e.message}`);
         continue;
+      } finally {
+        if (fs.existsSync(source)) fs.unlinkSync(source);
       }
     }
     const tags = { ...deriveTags(c), ...(overrides[String(c.id)]?.tags ?? {}) };

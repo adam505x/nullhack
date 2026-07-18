@@ -9,13 +9,19 @@
     "build:ext": "npm run build && node scripts/build-extension.mjs",
     "preview": "vite preview",
     "test": "vitest run",
-    "catalog": "node scripts/build-catalog.mjs"
+    "test:uniqlo": "node --import tsx --test test/uniqlo-importer.test.ts",
+    "typecheck:uniqlo": "tsc -p tsconfig.uniqlo.json",
+    "catalog": "node scripts/build-catalog.mjs",
+    "import:uniqlo": "tsx src/uniqlo-cli.ts",
+    "download:uniqlo-images": "tsx src/download-uniqlo-images.ts",
+    "categorize:uniqlo": "tsx src/uniqlo-categorizer.ts"
   },
   "dependencies": {
     "@fontsource/fraunces": "^5.2.9",
     "@fontsource/instrument-sans": "^5.2.8",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "sax": "^1.4.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.8",
@@ -24,9 +30,11 @@
     "@types/node": "^26.1.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/sax": "^1.2.7",
     "@vitejs/plugin-react": "^4.3.4",
     "jsdom": "^25.0.1",
     "playwright-core": "^1.61.1",
+    "tsx": "^4.20.0",
     "typescript": "^5.6.3",
     "vite": "^5.4.11",
     "vitest": "^2.1.8"

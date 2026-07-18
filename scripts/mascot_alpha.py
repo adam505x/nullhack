@@ -1,7 +1,7 @@
-"""Convert the cleaned mascot JPGs to transparent PNGs.
+"""Convert the cleaned mascot JPGs to transparent WebP images.
 
 Flood-fills from the borders across near-white pixels (the background) and sets
-them fully transparent; everything else keeps its colour. Writes *.png next to
+them fully transparent; everything else keeps its colour. Writes *.webp next to
 the source *.jpg files.
 """
 
@@ -45,8 +45,8 @@ def convert(path: Path) -> None:
         pix[x, y] = (r, g, b, 0)
         cleared += 1
         q.extend(((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)))
-    out = path.with_suffix(".png")
-    im.save(out)
+    out = path.with_suffix(".webp")
+    im.save(out, "WEBP", quality=85, method=6)
     print(f"{out.name}: {cleared}/{w*h} px transparent ({100*cleared/(w*h):.0f}%)")
 
 

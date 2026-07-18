@@ -1,4 +1,4 @@
-// Loads dist/ as an unpacked extension in Edge, visits uniqlo.com, and verifies
+// Loads dist/ as an unpacked extension in Edge or Chrome, visits uniqlo.com, and verifies
 // the Artemator FAB + 90% overlay. Screenshots land in scripts/.cache/shots-ext/.
 import fs from "node:fs";
 import path from "node:path";
@@ -8,11 +8,17 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const OUT = path.join(ROOT, "scripts", ".cache", "shots-ext");
 const PROFILE = path.join(ROOT, "scripts", ".cache", "edge-ext-profile");
+const CHANNEL =
+  process.env.ARTEMATOR_BROWSER_CHANNEL ??
+  (process.platform === "darwin" &&
+  !fs.existsSync("/Applications/Microsoft Edge.app")
+    ? "chrome"
+    : "msedge");
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
 const ctx = await chromium.launchPersistentContext(PROFILE, {
-  channel: "msedge",
+  channel: CHANNEL,
   headless: false,
   viewport: { width: 1440, height: 900 },
   args: [`--disable-extensions-except=${DIST}`, `--load-extension=${DIST}`],
