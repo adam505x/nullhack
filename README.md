@@ -46,9 +46,12 @@ Rebuild the catalog from scratch: `npm run catalog -- fetch`, review, then
 ## Repo map
 
 - `src/engine/` — the Bayesian / information-gain engine (framework-free TS)
-- `src/App.tsx`, `src/styles.css` — the UI (React + Vite)
+- `src/App.tsx`, `src/styles.css` — the UI (React + Vite): Akinator-style scene
+  (full-body genie left, speech-bubble prompt, bordered answer list) in a flat
+  white minimalist style; opens directly on question 1
 - `src/data/catalog.json` — generated item catalog with attribute vectors
 - `scripts/build-catalog.mjs` — HuggingFace → catalog pipeline
-- `scripts/clean_mascots.py` — mascot background cleanup (PIL)
+- `scripts/clean_mascots.py`, `scripts/mascot_alpha.py` — mascot background
+  cleanup → transparent PNGs (PIL)
 - `scripts/screenshot.mjs` — real-browser visual smoke test (Edge via playwright-core)
 - `public/artem/` — the genie's five moods

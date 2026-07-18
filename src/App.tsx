@@ -1,4 +1,4 @@
-import { useMemo, useReducer, useState } from "react";
+import { useMemo, useReducer } from "react";
 import { ArtematorEngine } from "./engine/engine";
 import type { Answer, Catalog, EngineState, Item } from "./engine/types";
 import catalogJson from "./data/catalog.json";
@@ -7,14 +7,16 @@ const catalog = catalogJson as Catalog;
 
 type Pose = "idle" | "waiting" | "thinking" | "focus" | "reveal";
 
-function poseFor(state: EngineState, phase: "start" | "playing"): Pose {
-  if (phase === "start") return "idle";
-  if (state.status === "won") return "reveal";
+// While asking, the genie cycles through poses every couple of questions so he
+// feels alive; "focus" is reserved for when he's closing in on an answer.
+const ASKING_CYCLE: Pose[] = ["waiting", "thinking", "idle"];
+
+function poseFor(state: EngineState): Pose {
+  if (state.status === "won") return "idle"; // arms crossed, proud
   if (state.status === "guessing") return "reveal";
   if (state.status === "defeated") return "thinking";
   if (state.topProbability > 0.55) return "focus";
-  if (state.topProbability > 0.25) return "thinking";
-  return "waiting";
+  return ASKING_CYCLE[Math.floor(state.questionsAsked / 2) % ASKING_CYCLE.length];
 }
 
 const ANSWERS: { value: Answer; label: string }[] = [
@@ -24,14 +26,6 @@ const ANSWERS: { value: Answer; label: string }[] = [
   { value: "probablyNot", label: "Probably not" },
   { value: "no", label: "No" },
 ];
-
-function Mascot({ pose }: { pose: Pose }) {
-  return (
-    <div className="mascot" data-testid="mascot" data-pose={pose}>
-      <img src={`/artem/${pose}.jpg`} alt={`Artemator looking ${pose}`} />
-    </div>
-  );
-}
 
 function ItemCard({ item, large }: { item: Item; large?: boolean }) {
   return (
@@ -47,22 +41,25 @@ function ItemCard({ item, large }: { item: Item; large?: boolean }) {
   );
 }
 
+function Bubble({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bubble">
+      <span className="bubble__tail" aria-hidden="true" />
+      {children}
+    </div>
+  );
+}
+
 export default function App() {
   const engine = useMemo(
     () => new ArtematorEngine(catalog, { rng: Math.random }),
     []
   );
-  const [phase, setPhase] = useState<"start" | "playing">("start");
   const [, bump] = useReducer((n: number) => n + 1, 0);
 
   const state = engine.state;
-  const pose = poseFor(state, phase);
+  const pose = poseFor(state);
 
-  const start = () => {
-    engine.reset();
-    setPhase("playing");
-    bump();
-  };
   const answer = (a: Answer) => {
     engine.answer(a);
     bump();
@@ -71,44 +68,38 @@ export default function App() {
     engine.confirmGuess(ok);
     bump();
   };
+  const restart = () => {
+    engine.reset();
+    bump();
+  };
 
   return (
-    <div className="stage">
-      <header className="brand">
-        <span className="brand__mark">Artemator</span>
-        {phase === "playing" && state.status === "asking" && (
-          <span className="brand__count">Question {state.questionsAsked + 1}</span>
+    <div className="scene">
+      <header className="topbar">
+        <span className="topbar__mark">Artemator</span>
+        {state.status === "asking" && (
+          <span className="topbar__count">Question {state.questionsAsked + 1}</span>
         )}
       </header>
 
-      <main className="card" data-status={phase === "start" ? "start" : state.status}>
-        <Mascot pose={pose} />
+      <img
+        key={pose}
+        className="genie"
+        data-testid="mascot"
+        data-pose={pose}
+        src={`/artem/${pose}.png`}
+        alt="The Artemator genie"
+      />
 
-        {phase === "start" && (
-          <section className="screen">
-            <h1 className="display">
-              Think of a piece <em>you're craving.</em>
-            </h1>
-            <p className="sub">
-              Answer a few questions — I'll read your style and find it. No
-              wrong answers.
-            </p>
-            <button className="btn btn--primary" onClick={start}>
-              Start
-            </button>
-          </section>
-        )}
-
-        {phase === "playing" && state.status === "asking" && state.question && (
-          <section className="screen" key={state.question.id}>
-            <h1 className="display display--question">{state.question.question}</h1>
-            <div className="answers">
+      <main className="panel" data-status={state.status}>
+        {state.status === "asking" && state.question && (
+          <section className="beat" key={state.question.id}>
+            <Bubble>
+              <p className="bubble__text">{state.question.question}</p>
+            </Bubble>
+            <div className="options" role="group" aria-label="Answers">
               {ANSWERS.map((a) => (
-                <button
-                  key={a.value}
-                  className="btn btn--answer"
-                  onClick={() => answer(a.value)}
-                >
+                <button key={a.value} className="option" onClick={() => answer(a.value)}>
                   {a.label}
                 </button>
               ))}
@@ -122,47 +113,60 @@ export default function App() {
           </section>
         )}
 
-        {phase === "playing" && state.status === "guessing" && state.guess && (
-          <section className="screen">
-            <p className="eyebrow">I'm seeing it…</p>
+        {state.status === "guessing" && state.guess && (
+          <section className="beat">
+            <Bubble>
+              <p className="bubble__text">I'm seeing it — is this your piece?</p>
+            </Bubble>
             <ItemCard item={state.guess} large />
-            <div className="answers answers--confirm">
-              <button className="btn btn--primary" onClick={() => confirm(true)}>
+            <div className="options">
+              <button className="option" onClick={() => confirm(true)}>
                 That's it
               </button>
-              <button className="btn btn--answer" onClick={() => confirm(false)}>
+              <button className="option" onClick={() => confirm(false)}>
                 No — keep looking
               </button>
             </div>
           </section>
         )}
 
-        {phase === "playing" && state.status === "won" && state.guess && (
-          <section className="screen">
-            <p className="eyebrow">Read you like a lookbook.</p>
+        {state.status === "won" && state.guess && (
+          <section className="beat">
+            <Bubble>
+              <p className="bubble__text">
+                Read you like a lookbook. Found in {state.questionsAsked} questions
+                {state.rejectedCount > 0
+                  ? ` — after ${state.rejectedCount} miss${state.rejectedCount > 1 ? "es" : ""}`
+                  : ""}
+                .
+              </p>
+            </Bubble>
             <ItemCard item={state.guess} large />
-            <p className="sub">
-              Found in {state.questionsAsked} questions
-              {state.rejectedCount > 0 ? ` (after ${state.rejectedCount} miss${state.rejectedCount > 1 ? "es" : ""})` : ""}.
-            </p>
-            <button className="btn btn--primary" onClick={start}>
-              Play again
-            </button>
+            <div className="options">
+              <button className="option" onClick={restart}>
+                Play again
+              </button>
+            </div>
           </section>
         )}
 
-        {phase === "playing" && state.status === "defeated" && (
-          <section className="screen">
-            <p className="eyebrow">You've got rare taste.</p>
-            <h1 className="display">My shortlist for you</h1>
+        {state.status === "defeated" && (
+          <section className="beat">
+            <Bubble>
+              <p className="bubble__text">
+                You've got rare taste — I'm stumped. My shortlist for you:
+              </p>
+            </Bubble>
             <div className="shortlist">
               {state.ranking.map((item) => (
                 <ItemCard key={item.id} item={item} />
               ))}
             </div>
-            <button className="btn btn--primary" onClick={start}>
-              Play again
-            </button>
+            <div className="options">
+              <button className="option" onClick={restart}>
+                Play again
+              </button>
+            </div>
           </section>
         )}
       </main>
