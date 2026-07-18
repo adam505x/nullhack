@@ -95,7 +95,9 @@ async function main() {
   for (const product of products) {
     const image = product.images.find(candidate => candidate.url.includes("/item/")) ?? product.images[0];
     const imagePath = image ? localByUrl.get(image.url) ?? null : null;
-    const color = imagePath ? classifyColor(await averageColor(imagePath)) : { ...zeros(colorIds), multicolor: 1 };
+    const color: Record<ColorId, number> = imagePath
+      ? classifyColor(await averageColor(imagePath))
+      : { ...(zeros(colorIds) as Record<ColorId, number>), multicolor: 1 };
     const style = classifyStyle(product.name, product.gender);
     const garment = classifyGarment(product.name);
     rows.push({ productId: product.productId, name: product.name, gender: product.gender, productPageUrl: product.productPageUrl, canonicalImage: imagePath, canonicalImageUrl: image?.url ?? null, weights: { ...garment, ...style, ...color, dark: color.black || color.navy ? 0.9 : 0.1, colourPop: color.red || color.orange || color.yellow || color.pink || color.purple || color.green || color.blue ? 0.8 : style.colourPop, neutralTone: color.white || color.grey || color.beige || color.brown || color.black || color.navy ? 0.8 : style.neutralTone } });

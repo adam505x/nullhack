@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Artemator — your style, guessed",
+  "version": "0.1.0",
+  "description": "An Akinator for your wardrobe. Think of a piece you're craving and the genie will find it — right on Uniqlo.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.uniqlo.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "assets/*", "items/*", "artem/*", "icons/*"],
+      "matches": ["*://*.uniqlo.com/*"]
+    }
+  ]
+}

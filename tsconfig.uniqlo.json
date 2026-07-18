@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": [
+    "src/download-uniqlo-images.ts",
+    "src/uniqlo-categorizer.ts",
+    "src/uniqlo-cli.ts",
+    "src/uniqlo-importer.ts",
+    "test/uniqlo-importer.test.ts"
+  ]
+}

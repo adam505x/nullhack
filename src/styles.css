@@ -1,0 +1,307 @@
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --ink: #141414;
+  --ink-soft: #737373;
+  --line: #e5e5e5;
+  --gold: #b08d4c;
+  font-family: "Instrument Sans", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.scene {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0 8px;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 22px 32px;
+  z-index: 2;
+}
+
+.topbar__mark {
+  font-family: "Fraunces", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.topbar__count {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* when running inside the extension overlay, clear the host's close button */
+.embedded .topbar {
+  padding-right: 72px;
+}
+
+/* full-body genie, bottom-anchored, right beside the question column */
+.genie {
+  align-self: flex-end;
+  height: min(76vh, 720px);
+  width: auto;
+  margin-right: -36px; /* tuck the bubble tail up against him */
+  z-index: 1;
+  pointer-events: none;
+  animation:
+    appear 0.3s ease both,
+    bob 3.6s ease-in-out infinite;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* a slow, gentle float — he is a genie, after all */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .genie {
+    animation: appear 0.3s ease both;
+  }
+}
+
+/* content column to the right of the character */
+.panel {
+  position: relative;
+  z-index: 2;
+  width: min(540px, 92vw);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 96px 24px 72px;
+}
+
+.beat {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: rise 0.35s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* speech bubble: flat white, hairline border, tail pointing at the genie */
+.bubble {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 26px;
+}
+
+.bubble__tail {
+  position: absolute;
+  left: -7px;
+  top: 34px;
+  width: 12px;
+  height: 12px;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transform: rotate(45deg);
+}
+
+.bubble__text {
+  margin: 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1.3;
+}
+
+/* the option list: one bordered block, hairline dividers, no shadows */
+.options {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  text-align: center;
+  padding: 15px 20px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.option:first-child {
+  border-top: none;
+}
+
+.option:hover {
+  background: #f5f5f5;
+}
+
+.option:active {
+  background: #ededed;
+}
+
+.confidence {
+  height: 2px;
+  width: 160px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  align-self: center;
+}
+
+.confidence__fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.5s ease;
+}
+
+.item-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-card__frame {
+  width: 150px;
+  height: 190px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.item-card--large .item-card__frame {
+  width: 200px;
+  height: 256px;
+}
+
+.item-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-card figcaption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  max-width: 260px;
+  text-align: center;
+}
+
+.item-card__type {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.item-card__name {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.shortlist {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shortlist .item-card__frame {
+  width: 112px;
+  height: 142px;
+}
+
+.shortlist .item-card__name {
+  font-size: 13px;
+  max-width: 15ch;
+}
+
+.foot {
+  position: fixed;
+  bottom: 14px;
+  right: 32px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  z-index: 2;
+}
+
+/* narrow screens: genie shrinks into the corner, content takes the width */
+@media (max-width: 760px) {
+  .scene {
+    display: block;
+  }
+  .genie {
+    position: fixed;
+    left: 8px;
+    bottom: 0;
+    height: 26vh;
+    margin-right: 0;
+  }
+  .panel {
+    width: auto;
+    padding: 84px 18px 30vh;
+    justify-content: flex-start;
+  }
+  .bubble__text {
+    font-size: 21px;
+  }
+  .foot {
+    display: none;
+  }
+}

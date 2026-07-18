@@ -1,3 +1,7 @@
-node_modules/
-data/.cache/
-data/uniqlo-images/
+node_modules
+dist
+*.local
+.DS_Store
+scripts/.cache
+data/.cache
+data/uniqlo-images
