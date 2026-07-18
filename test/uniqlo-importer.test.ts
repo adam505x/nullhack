@@ -1,0 +1,11 @@
+import assert from "node:assert/strict";
+import { mkdtemp, readFile } from "node:fs/promises";
+import test from "node:test";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { gzipSync } from "node:zlib";
+import { classifyAdult, extractProductPage, normalizeUrl, runImport } from "../src/uniqlo-importer.js";
+const fixture = (name: string) => join(process.cwd(), "test", "fixtures", name);
+test("normalizes URL tracking keys and classifies adult gender", () => { assert.equal(normalizeUrl("https://www.uniqlo.com/us/en/products/E1?utm_source=x#x"), "https://www.uniqlo.com/us/en/products/E1"); assert.equal(classifyAdult("Women", "tops"), "women"); assert.equal(classifyAdult("Kids", "boys"), null); });
+test("extracts JSON-LD product metadata and images", async () => { const html = await readFile(fixture("uniqlo-product-page.html"), "utf8"); const product = extractProductPage(html, "https://www.uniqlo.com/us/en/products/E123456-000/00"); assert.equal(product.productId, "E123456"); assert.equal(product.gender, "women"); assert.equal(product.images.length, 2); });
+test("imports gzipped sitemap fixtures, uses product-page fallback, and writes outputs", async () => { const output = await mkdtemp(join(tmpdir(), "uniqlo-import-test-")); const sitemap = gzipSync(await readFile(fixture("uniqlo-sitemap.xml"))); const product = await readFile(fixture("uniqlo-product-page.html")); const fetchImpl: typeof fetch = async input => { const url = String(input); return new Response(url.includes("sitemap") ? sitemap : url.includes("E765432") ? "<html></html>" : product, { status: 200 }); }; const summary = await runImport({ sitemap: "https://example.test/sitemap.xml.gz", output, fetchImpl, delayMs: 0, log: () => {} }); assert.equal(summary.candidateUrls, 4); assert.equal(summary.adultProducts, 2); assert.equal(summary.women, 2); assert.equal(summary.imageReferences, 3); assert.match(await readFile(join(output, "uniqlo-products.csv"), "utf8"), /sitemap-image/); });

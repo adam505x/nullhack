@@ -1,0 +1,7 @@
+<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://www.zara.com/de/de/leinen-hemd-p01234567.html?colorId=250</loc>
+    <image:image><image:loc>https://static.zara.net/photo-1.jpg</image:loc><image:title>Leinenhemd Vorderansicht</image:title></image:image>
+    <image:image><image:loc>https://static.zara.net/photo-2.jpg</image:loc><image:caption>Detail</image:caption></image:image>
+  </url>
+  <url><loc>https://www.zara.com/de/de/not-in-products-p09999999.html</loc><image:image><image:loc>https://static.zara.net/ignored.jpg</image:loc></image:image></url>
+</urlset>
