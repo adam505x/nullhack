@@ -52,6 +52,11 @@ body {
   color: var(--ink-soft);
 }
 
+/* when running inside the extension overlay, clear the host's close button */
+.embedded .topbar {
+  padding-right: 72px;
+}
+
 /* full-body genie, bottom-anchored, right beside the question column */
 .genie {
   align-self: flex-end;

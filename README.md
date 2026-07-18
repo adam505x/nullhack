@@ -40,6 +40,19 @@ npm test           # engine convergence + catalog integrity + full UI flow
 npm run build      # production build
 ```
 
+## Run it as a Chrome extension (on Uniqlo)
+
+```sh
+npm run build:ext  # builds the app + assembles dist/ as an unpacked extension
+```
+
+Then open `chrome://extensions` (or `edge://extensions`), enable Developer mode,
+"Load unpacked", and pick the `dist/` folder. Visit any `uniqlo.com` page: the
+genie floats bottom-right; clicking him opens the game over the page at 90% of
+the screen with the site dimmed behind it (Esc, the ×, or the backdrop close it).
+Everything — engine, catalog, images, fonts — is bundled, so it works offline.
+`node scripts/ext-check.mjs` re-verifies the whole flow in a real browser.
+
 Rebuild the catalog from scratch: `npm run catalog -- fetch`, review, then
 `npm run catalog -- build`.
 

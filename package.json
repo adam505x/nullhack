@@ -6,11 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:ext": "npm run build && node scripts/build-extension.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "catalog": "node scripts/build-catalog.mjs"
   },
   "dependencies": {
+    "@fontsource/fraunces": "^5.2.9",
+    "@fontsource/instrument-sans": "^5.2.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
