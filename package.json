@@ -1,0 +1,19 @@
+{
+  "name": "uniqlo-catalogue-importer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "import:uniqlo": "tsx src/uniqlo-cli.ts",
+    "download:uniqlo-images": "tsx src/download-uniqlo-images.ts",
+    "test": "tsx --test test/**/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/sax": "^1.2.7",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0"
+  },
+  "dependencies": {
+    "sax": "^1.4.1"
+  }
+}
