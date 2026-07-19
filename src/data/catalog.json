@@ -1129,8 +1129,8 @@
       "id": "achromatic",
       "prompts": [
         "Is it black, white, or grey?",
-        "Are we staying in an achromatic palette?",
-        "Does the color skip hue altogether?"
+        "Are we sticking to black, white, and grey?",
+        "Would you prefer a simple black, white, or grey palette?"
       ],
       "topic": "color",
       "stage": "color",
