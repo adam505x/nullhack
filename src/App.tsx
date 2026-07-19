@@ -93,9 +93,9 @@ export default function App() {
 
       <main className="panel" data-status={state.status}>
         {state.status === "asking" && state.question && (
-          <section className="beat" key={state.question.id}>
+          <section className="beat" key={state.question.attributeId}>
             <Bubble>
-              <p className="bubble__text">{state.question.question}</p>
+              <p className="bubble__text">{state.question.prompt}</p>
             </Bubble>
             <div className="options" role="group" aria-label="Answers">
               {ANSWERS.map((a) => (

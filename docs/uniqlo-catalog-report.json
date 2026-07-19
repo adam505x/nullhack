@@ -1,0 +1,865 @@
+{
+  "generatedAt": "2026-07-19T00:09:06.161Z",
+  "products": 1290,
+  "attributes": 112,
+  "familyCounts": {
+    "accessory": 72,
+    "footwear": 2,
+    "jeans": 37,
+    "legwear": 81,
+    "other": 64,
+    "outerwear": 69,
+    "pants": 161,
+    "shirt": 125,
+    "shorts": 108,
+    "skirt": 41,
+    "sweater": 49,
+    "sweatshirt": 35,
+    "tshirt": 318,
+    "underwear": 128
+  },
+  "unknownCoverage": {
+    "wearTop": 0,
+    "wearBottom": 0,
+    "onePiece": 0,
+    "feetRelated": 0,
+    "footwear": 0,
+    "accessory": 0,
+    "outerwear": 0,
+    "underwear": 0,
+    "legwear": 0,
+    "womenswear": 0,
+    "shortSleeve": 0.0853,
+    "longSleeve": 0.0853,
+    "sleeveless": 0.0853,
+    "collared": 0.0822,
+    "hooded": 0,
+    "buttonFront": 0.1667,
+    "zipFront": 0.1016,
+    "cropped": 0,
+    "longLength": 0.8465,
+    "graphicOrPrinted": 0,
+    "technicalFabric": 0,
+    "knit": 0,
+    "linen": 0,
+    "fleeceOrPile": 0,
+    "downOrPadded": 0,
+    "denim": 0,
+    "licensedCharacter": 0,
+    "animeOrManga": 0,
+    "artistOrMuseum": 0,
+    "textGraphic": 0,
+    "collaboration": 0,
+    "polo": 0,
+    "overshirt": 0,
+    "patterned": 0,
+    "wideLeg": 0,
+    "pleated": 0,
+    "cargo": 0,
+    "jogger": 0,
+    "ankleLength": 0,
+    "peaceForAll": 0,
+    "shueishaManga": 0,
+    "peanutsGraphic": 0,
+    "miffyGraphic": 0,
+    "magicForAll": 0,
+    "pokemonGraphic": 0,
+    "starWarsGraphic": 0,
+    "marioGraphic": 0,
+    "museumArtGraphic": 0,
+    "sunglasses": 0,
+    "metalFrame": 0,
+    "squareFrame": 0,
+    "roundFrame": 0,
+    "foldingFrame": 0,
+    "doubleBridge": 0,
+    "lowRise": 0,
+    "highRise": 0,
+    "seamless": 0,
+    "wireless": 0,
+    "braTop": 0,
+    "mesh": 0,
+    "socks": 0,
+    "sockShort": 0,
+    "sockMidLength": 0,
+    "sockKneeHigh": 0,
+    "sockRibbed": 0,
+    "sockMultipack": 0,
+    "sockPatterned": 0,
+    "striped": 0,
+    "slimFit": 0,
+    "nonIron": 0,
+    "jerseyFabric": 0,
+    "oxfordFabric": 0,
+    "stretchFabric": 0,
+    "straightLeg": 0,
+    "balloonOrVolume": 0,
+    "easyWaist": 0,
+    "dressy": 0,
+    "sporty": 0,
+    "warmWeather": 0,
+    "dark": 0,
+    "colourPop": 0,
+    "neutralTone": 0,
+    "layerPiece": 0,
+    "statement": 0,
+    "minimal": 0,
+    "streetwear": 0,
+    "classic": 0,
+    "cozy": 0,
+    "edgy": 0,
+    "romantic": 0,
+    "officeOk": 0,
+    "nightOut": 0,
+    "fitted": 0,
+    "luxe": 0,
+    "achromatic": 0,
+    "neutralColor": 0,
+    "warmColor": 0,
+    "coolColor": 0,
+    "color:black": 0,
+    "color:white": 0,
+    "color:grey": 0,
+    "color:beige": 0,
+    "color:brown": 0,
+    "color:navy": 0,
+    "color:blue": 0,
+    "color:green": 0,
+    "color:yellow": 0,
+    "color:orange": 0,
+    "color:red": 0,
+    "color:pink": 0,
+    "color:purple": 0,
+    "color:multicolor": 0
+  },
+  "uniqueVectors": 971,
+  "duplicateGroups": 191,
+  "itemsInDuplicateGroups": 510,
+  "itemsInGroupsLargerThanFive": 57,
+  "largeGroupShare": 0.0442,
+  "largestGroups": [
+    {
+      "size": 11,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E487576-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | ONE PIECE"
+        },
+        {
+          "id": "E488251-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | NARUTO"
+        },
+        {
+          "id": "E488252-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | NARUTO"
+        },
+        {
+          "id": "E488253-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | NARUTO"
+        },
+        {
+          "id": "E488254-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | NARUTO"
+        },
+        {
+          "id": "E488256-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | Sakamoto Days"
+        },
+        {
+          "id": "E488262-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | COJI-COJI"
+        },
+        {
+          "id": "E488263-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | SPY×FAMILY"
+        },
+        {
+          "id": "E489652-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | SPY×FAMILY"
+        },
+        {
+          "id": "E489653-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | SPY×FAMILY"
+        },
+        {
+          "id": "E489663-000",
+          "name": "MANGA UT SHUEISHA 100th UT Graphic T-Shirt | BLEACH"
+        }
+      ]
+    },
+    {
+      "size": 10,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E482748-000",
+          "name": "MoMA Poster Art Collection UT Graphic T-Shirt"
+        },
+        {
+          "id": "E482752-000",
+          "name": "NY POP ART UT Graphic T-Shirt | Andy Warhol"
+        },
+        {
+          "id": "E485062-000",
+          "name": "NY POP ART UT Graphic T-Shirt | Andy Warhol"
+        },
+        {
+          "id": "E485064-000",
+          "name": "NY POP ART UT Graphic T-Shirt | Keith Haring"
+        },
+        {
+          "id": "E485067-000",
+          "name": "NY POP ART UT Graphic T-Shirt | Keith Haring"
+        },
+        {
+          "id": "E485485-000",
+          "name": "MoMA Poster Art Collection UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485487-000",
+          "name": "MoMA Poster Art Collection UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485489-000",
+          "name": "MoMA Poster Art Collection UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485666-000",
+          "name": "Ukiyo-e Animals UT Graphic T-Shirt"
+        },
+        {
+          "id": "E489153-000",
+          "name": "Jason Polan UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 9,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E457124-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Kashiwa Sato"
+        },
+        {
+          "id": "E466374-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Julian Opie"
+        },
+        {
+          "id": "E468495-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Yu Nagaba"
+        },
+        {
+          "id": "E475761-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Tokujin Yoshioka"
+        },
+        {
+          "id": "E475763-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Saul Leiter"
+        },
+        {
+          "id": "E476353-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Olivia Arthur"
+        },
+        {
+          "id": "E476354-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Cristina de Middel"
+        },
+        {
+          "id": "E476355-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Lindokuhle Sobekwa"
+        },
+        {
+          "id": "E488729-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Sofia Coppola"
+        }
+      ]
+    },
+    {
+      "size": 7,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E459561-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Akamai"
+        },
+        {
+          "id": "E472518-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Hakuju Kuiseko"
+        },
+        {
+          "id": "E480815-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Koji Yakusho"
+        },
+        {
+          "id": "E481930-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Artemis"
+        },
+        {
+          "id": "E481931-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Artemis"
+        },
+        {
+          "id": "E488270-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | TOHO Co., Ltd."
+        },
+        {
+          "id": "E489389-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Ke Huy Quan"
+        }
+      ]
+    },
+    {
+      "size": 7,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E483261-000",
+          "name": "CHIIKAWA UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484490-000",
+          "name": "Cheerful Characters UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488307-000",
+          "name": "mofusand UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488928-000",
+          "name": "Monchhichi UT Graphic T-Shirt"
+        },
+        {
+          "id": "E490277-000",
+          "name": "ZO&FRIENDS UT Graphic T-Shirt"
+        },
+        {
+          "id": "E490279-000",
+          "name": "ZO&FRIENDS UT Graphic T-Shirt"
+        },
+        {
+          "id": "E491212-000",
+          "name": "CHIIKAWA UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 7,
+      "family": "accessory",
+      "subtype": "accessory",
+      "items": [
+        {
+          "id": "E485755-000",
+          "name": "Wellington Sunglasses"
+        },
+        {
+          "id": "E485763-000",
+          "name": "Flat Top Sunglasses"
+        },
+        {
+          "id": "E485764-000",
+          "name": "Big Square Sunglasses"
+        },
+        {
+          "id": "E485767-000",
+          "name": "Rectangle Sunglasses"
+        },
+        {
+          "id": "E485768-000",
+          "name": "Bold Square Sunglasses"
+        },
+        {
+          "id": "E485769-000",
+          "name": "Angular Sunglasses"
+        },
+        {
+          "id": "E485770-000",
+          "name": "Square Sunglasses"
+        }
+      ]
+    },
+    {
+      "size": 6,
+      "family": "legwear",
+      "subtype": "leggings-or-tights",
+      "items": [
+        {
+          "id": "E450704-000",
+          "name": "HEATTECH Cotton Tights | Extra Warm"
+        },
+        {
+          "id": "E450705-000",
+          "name": "HEATTECH Ultra Warm Tights (2022 Edition)"
+        },
+        {
+          "id": "E452578-000",
+          "name": "HEATTECH Cotton Tights | Extra Warm | Heather"
+        },
+        {
+          "id": "E461013-000",
+          "name": "HEATTECH Tights"
+        },
+        {
+          "id": "E461015-000",
+          "name": "HEATTECH Ultra Warm Tights"
+        },
+        {
+          "id": "E479538-000",
+          "name": "HEATTECH Ultra Warm Tights"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "underwear",
+      "subtype": "bra",
+      "items": [
+        {
+          "id": "E450442-000",
+          "name": "Wireless Bra (Ultra Relax) (2022 Edition)"
+        },
+        {
+          "id": "E482661-000",
+          "name": "Wireless Bra | 3D Hold"
+        },
+        {
+          "id": "E482662-000",
+          "name": "Relax Wireless Bra"
+        },
+        {
+          "id": "E488147-000",
+          "name": "Cotton Wireless Bra | Triangle | Unlined"
+        },
+        {
+          "id": "E488845-000",
+          "name": "Cotton Wireless Bra | Line"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "accessory",
+      "subtype": "bag",
+      "items": [
+        {
+          "id": "E462191-000",
+          "name": "Cotton Reusable Tote Bag"
+        },
+        {
+          "id": "E481663-000",
+          "name": "Puffy Shoulder Bag"
+        },
+        {
+          "id": "E484719-000",
+          "name": "Gift Bag"
+        },
+        {
+          "id": "E487523-000",
+          "name": "Reusable Bag"
+        },
+        {
+          "id": "E487524-000",
+          "name": "Gift Bag"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "underwear",
+      "subtype": "boxer-or-trunk",
+      "items": [
+        {
+          "id": "E469990-000",
+          "name": "Cotton Low Rise Boxer Briefs"
+        },
+        {
+          "id": "E474214-000",
+          "name": "Low Rise Cotton Boxer Briefs"
+        },
+        {
+          "id": "E479502-000",
+          "name": "Cotton Low Rise Boxer Briefs"
+        },
+        {
+          "id": "E482601-000",
+          "name": "Low Rise Boxer Briefs"
+        },
+        {
+          "id": "E486878-000",
+          "name": "Cotton Low Rise Boxer Briefs"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "accessory",
+      "subtype": "accessory",
+      "items": [
+        {
+          "id": "E480159-000",
+          "name": "Stitched Middle Width Belt"
+        },
+        {
+          "id": "E481660-000",
+          "name": "Holeless Belt"
+        },
+        {
+          "id": "E483050-000",
+          "name": "Drawstring Bag"
+        },
+        {
+          "id": "E483727-000",
+          "name": "Reversible Holeless Narrow Belt"
+        },
+        {
+          "id": "E486459-000",
+          "name": "Quilted Puffy Shoulder Bag"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "other",
+      "subtype": "other",
+      "items": [
+        {
+          "id": "E482834-000",
+          "name": "Flare Skort"
+        },
+        {
+          "id": "E483042-000",
+          "name": "Cotton Culottes"
+        },
+        {
+          "id": "E484209-000",
+          "name": "Jorts | 13\""
+        },
+        {
+          "id": "E487118-000",
+          "name": "Ribbed Sleeveless Top | Flower"
+        },
+        {
+          "id": "E488173-000",
+          "name": "Cotton Pajamas | Long Sleeve | Gingham Check"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E483265-000",
+          "name": "ZO&FRIENDS UT Graphic T-Shirt"
+        },
+        {
+          "id": "E483298-000",
+          "name": "Cheerful Characters UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484491-000",
+          "name": "Cheerful Characters UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488305-000",
+          "name": "mofusand UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488572-000",
+          "name": "Monchhichi UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E484260-000",
+          "name": "Jason Polan UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485486-000",
+          "name": "MoMA Poster Art Collection UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485488-000",
+          "name": "MoMA Poster Art Collection UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485667-000",
+          "name": "Ukiyo-e Animals UT Graphic T-Shirt"
+        },
+        {
+          "id": "E489154-000",
+          "name": "Jason Polan UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 5,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E484493-000",
+          "name": "Cheerful Characters UT Graphic T-Shirt"
+        },
+        {
+          "id": "E487990-000",
+          "name": "mofusand UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488304-000",
+          "name": "mofusand UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488926-000",
+          "name": "Monchhichi UT Graphic T-Shirt"
+        },
+        {
+          "id": "E488927-000",
+          "name": "Monchhichi UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "underwear",
+      "subtype": "boxer-or-trunk",
+      "items": [
+        {
+          "id": "E454326-000",
+          "name": "AIRism Boxer Briefs"
+        },
+        {
+          "id": "E480997-000",
+          "name": "AIRism Boxer Briefs"
+        },
+        {
+          "id": "E482538-000",
+          "name": "AIRism Boxer Briefs"
+        },
+        {
+          "id": "E489058-000",
+          "name": "AIRism Boxer Briefs | Bicolor"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "tshirt",
+      "subtype": "tshirt",
+      "items": [
+        {
+          "id": "E455365-000",
+          "name": "SUPIMA® Cotton T-Shirt"
+        },
+        {
+          "id": "E482301-000",
+          "name": "V-Neck T-Shirt"
+        },
+        {
+          "id": "E485454-000",
+          "name": "Bicolor T-Shirt"
+        },
+        {
+          "id": "E487302-000",
+          "name": "SUPIMA® Cotton V-Neck T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "pants",
+      "subtype": "pants",
+      "items": [
+        {
+          "id": "E456207-000",
+          "name": "Linen Cotton Tapered Pants"
+        },
+        {
+          "id": "E468644-000",
+          "name": "Linen Cotton Tapered Pants | Tall"
+        },
+        {
+          "id": "E473685-000",
+          "name": "Linen Cotton Tapered Pants"
+        },
+        {
+          "id": "E473687-000",
+          "name": "Linen Cotton Tapered Pants | Tall"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E457111-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Haruki Murakami"
+        },
+        {
+          "id": "E472520-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Takeshi Yoro"
+        },
+        {
+          "id": "E479184-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Ichiro Suzuki"
+        },
+        {
+          "id": "E480814-000",
+          "name": "PEACE FOR ALL Graphic T-Shirt | Akamai Technologies"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "accessory",
+      "subtype": "accessory",
+      "items": [
+        {
+          "id": "E462675-000",
+          "name": "Chunky Stole"
+        },
+        {
+          "id": "E484339-000",
+          "name": "Adjustable Crochet Hat"
+        },
+        {
+          "id": "E486322-000",
+          "name": "Crochet Tote Bag"
+        },
+        {
+          "id": "E492193-000",
+          "name": "Drawstring Bag"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "shirt",
+      "subtype": "shirt",
+      "items": [
+        {
+          "id": "E470182-000",
+          "name": "Flannel Shirt"
+        },
+        {
+          "id": "E486597-000",
+          "name": "Flannel Shirt | Ombre Check"
+        },
+        {
+          "id": "E486598-000",
+          "name": "Flannel Shirt | Tartan Check"
+        },
+        {
+          "id": "E486604-000",
+          "name": "Flannel Shirt | Tartan Check"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "jeans",
+      "subtype": "jeans",
+      "items": [
+        {
+          "id": "E482858-000",
+          "name": "Slim Straight Jeans | Selvedge"
+        },
+        {
+          "id": "E485627-000",
+          "name": "Slim Straight Jeans | Selvedge"
+        },
+        {
+          "id": "E485801-000",
+          "name": "Slim Straight Jeans | Selvedge | Tall"
+        },
+        {
+          "id": "E489514-000",
+          "name": "Slim Straight Jeans | Selvedge | Tall"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E484475-000",
+          "name": "PEANUTS UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484477-000",
+          "name": "PEANUTS UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484479-000",
+          "name": "PEANUTS UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484482-000",
+          "name": "PEANUTS UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E484494-000",
+          "name": "Cheerful Characters UT Graphic T-Shirt"
+        },
+        {
+          "id": "E485164-000",
+          "name": "mofusand UT Graphic T-Shirt"
+        },
+        {
+          "id": "E487991-000",
+          "name": "mofusand UT Graphic T-Shirt"
+        },
+        {
+          "id": "E491211-000",
+          "name": "CHIIKAWA UT Graphic T-Shirt"
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "family": "tshirt",
+      "subtype": "graphic-tshirt",
+      "items": [
+        {
+          "id": "E484498-000",
+          "name": "miffy in bloom UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484499-000",
+          "name": "miffy in bloom UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484500-000",
+          "name": "miffy in bloom UT Graphic T-Shirt"
+        },
+        {
+          "id": "E484501-000",
+          "name": "miffy in bloom UT Graphic T-Shirt"
+        }
+      ]
+    }
+  ]
+}

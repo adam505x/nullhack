@@ -125,6 +125,8 @@ const ACCESSORY = new Set(["Handbags", "Sunglasses", "Watches"]);
 const DARK = new Set(["Black", "Navy Blue", "Charcoal", "Coffee Brown", "Maroon"]);
 const NEUTRAL = new Set(["White", "Off White", "Beige", "Cream", "Grey", "Tan", "Brown", "Khaki", "Silver"]);
 const POP = new Set(["Red", "Pink", "Yellow", "Orange", "Green", "Purple", "Magenta", "Peach", "Turquoise Blue", "Sea Green", "Lime Green", "Rust", "Fluorescent Green"]);
+const EXPLICIT_COLOURS = ["black", "white", "grey", "beige", "brown", "navy", "blue", "green", "yellow", "orange", "red", "pink", "purple", "multicolor"];
+const COLOUR_ALIASES = { "Navy Blue": "navy", "Charcoal": "grey", "Coffee Brown": "brown", "Off White": "white", "Cream": "beige", "Tan": "beige", "Khaki": "beige", "Silver": "grey", "Magenta": "pink", "Peach": "pink", "Turquoise Blue": "blue", "Sea Green": "green", "Lime Green": "green", "Rust": "orange", "Fluorescent Green": "green" };
 
 function deriveTags(c) {
   const t = {};
@@ -184,6 +186,9 @@ function deriveTags(c) {
         : 0.5;
   t.luxe = /leather|silk|premium/.test(name) || at === "Blazers" || at === "Handbags" ? 0.6 : 0.3;
 
+  const explicitColour = COLOUR_ALIASES[colour] || colour.toLowerCase();
+  for (const id of EXPLICIT_COLOURS) t[id] = id === explicitColour ? 1 : 0;
+
   for (const k of Object.keys(t)) t[k] = Math.round(t[k] * 100) / 100;
   return t;
 }
@@ -238,6 +243,8 @@ async function cmdBuild() {
       id: String(c.id),
       name: overrides[String(c.id)]?.name ?? c.name,
       articleType: c.articleType,
+      productFamily: productFamily(c.articleType),
+      productSubtype: c.articleType,
       image: `/items/${file}`,
       tags,
     });
@@ -248,32 +255,64 @@ async function cmdBuild() {
   console.log(`\nWrote ${items.length} items + ${ATTRIBUTES.length} attributes -> ${CATALOG_OUT}`);
 }
 
-// Question bank. `broad: true` marks openers the engine may slightly prefer early.
+function productFamily(articleType) {
+  if (["Tshirts", "Tops", "Kurtas"].includes(articleType)) return "tshirt";
+  if (articleType === "Shirts") return "shirt";
+  if (articleType === "Sweaters") return "sweater";
+  if (articleType === "Sweatshirts") return "sweatshirt";
+  if (["Jackets", "Blazers"].includes(articleType)) return "outerwear";
+  if (["Trousers", "Track Pants", "Leggings"].includes(articleType)) return "pants";
+  if (articleType === "Jeans") return "jeans";
+  if (articleType === "Shorts") return "shorts";
+  if (articleType === "Skirts") return "skirt";
+  if (articleType === "Dresses") return "dress";
+  if (FOOTWEAR.has(articleType)) return "footwear";
+  if (ACCESSORY.has(articleType)) return "accessory";
+  return "other";
+}
+
+const question = (id, copy, topic, stage = "style", extra = {}) => ({
+  id,
+  prompts: [
+    copy,
+    `Quick style check: ${copy.charAt(0).toLowerCase()}${copy.slice(1)}`,
+    `One more clue — ${copy.charAt(0).toLowerCase()}${copy.slice(1)}`,
+  ],
+  topic,
+  stage,
+  ...extra,
+});
+
 const ATTRIBUTES = [
-  { id: "wearTop", question: "Is it something you'd wear on your top half?" },
-  { id: "wearBottom", question: "Is it something you'd wear on your bottom half?" },
-  { id: "footwear", question: "Are we talking about footwear?" },
-  { id: "accessory", question: "Is it an accessory rather than clothing?" },
-  { id: "womenswear", question: "Are we shopping the womenswear side?" },
-  { id: "dressy", question: "Are you dressing up rather than down?" },
-  { id: "sporty", question: "Does it have athletic energy?" },
-  { id: "warmWeather", question: "Is it made for warm weather?" },
-  { id: "dark", question: "Are you feeling dark colours today?" },
-  { id: "colourPop", question: "Should it bring a pop of colour?" },
-  { id: "neutralTone", question: "Are you drawn to neutral tones — white, beige, grey?" },
-  { id: "denim", question: "Is denim involved?" },
-  { id: "layerPiece", question: "Is it a layer — something worn over another piece?" },
-  { id: "statement", question: "Should it turn heads?" },
-  { id: "minimal", question: "Do you want something clean and minimal?" },
-  { id: "streetwear", question: "Are we in streetwear territory?" },
-  { id: "classic", question: "Is it a timeless classic rather than a trend?" },
-  { id: "cozy", question: "Is comfort the top priority?" },
-  { id: "edgy", question: "Should it have a bit of an edge?" },
-  { id: "romantic", question: "Is the vibe soft and romantic?" },
-  { id: "officeOk", question: "Could you wear it to the office?" },
-  { id: "nightOut", question: "Is it destined for a night out?" },
-  { id: "fitted", question: "Should it hug the body rather than hang loose?" },
-  { id: "luxe", question: "Should it feel a little luxe?" },
+  question("wearTop", "Is it something you'd wear on your top half?", "silhouette", "routing"),
+  question("wearBottom", "Is it something you'd wear on your bottom half?", "silhouette", "routing"),
+  question("footwear", "Are we talking about footwear?", "category", "routing"),
+  question("accessory", "Is it an accessory rather than clothing?", "category", "routing"),
+  question("womenswear", "Was it listed in the women's section?", "department", "routing"),
+  question("dressy", "Are you dressing up rather than down?", "occasion"),
+  question("sporty", "Does it have athletic energy?", "occasion"),
+  question("warmWeather", "Is it made for warm weather?", "season"),
+  question("dark", "Are you feeling dark colours today?", "color", "color", { colorLevel: "family" }),
+  question("colourPop", "Should it bring a pop of colour?", "color", "color", { colorLevel: "family" }),
+  question("neutralTone", "Are you drawn to neutral tones?", "color", "color", { colorLevel: "family" }),
+  question("denim", "Is denim involved?", "fabric", "construction"),
+  question("layerPiece", "Is it a layer worn over another piece?", "layering"),
+  question("statement", "Should it turn heads?", "aesthetic"),
+  question("minimal", "Do you want something clean and minimal?", "aesthetic"),
+  question("streetwear", "Are we in streetwear territory?", "aesthetic"),
+  question("classic", "Is it a timeless classic rather than a trend?", "aesthetic"),
+  question("cozy", "Is comfort the top priority?", "comfort"),
+  question("edgy", "Should it have a bit of an edge?", "aesthetic"),
+  question("romantic", "Is the vibe soft and romantic?", "aesthetic"),
+  question("officeOk", "Could you wear it to the office?", "occasion"),
+  question("nightOut", "Is it destined for a night out?", "occasion"),
+  question("fitted", "Should it hug the body rather than hang loose?", "fit"),
+  question("luxe", "Should it feel a little luxe?", "aesthetic"),
+  ...EXPLICIT_COLOURS.map((id) =>
+    question(id, `Is your product ${id}?`, "color", "color", {
+      colorLevel: "exact",
+    })
+  ),
 ];
 
 const cmd = process.argv[2];
