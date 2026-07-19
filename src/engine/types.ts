@@ -44,6 +44,8 @@ export interface Item {
   productFamily: ProductFamily;
   productSubtype: string;
   image: string;
+  /** Optional source/product page, when the catalog provides one. */
+  url?: string;
   /** attribute id -> how true it is for this item, in [0, 1]; missing = unknown */
   tags: Record<string, number>;
 }

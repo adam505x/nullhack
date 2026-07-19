@@ -51,6 +51,18 @@ describe("Artemator UI", () => {
     expect(
       screen.getByText(/Read you like a lookbook|My shortlist for you/)
     ).toBeInTheDocument();
+    if (screen.getByText(/Read you like a lookbook/)) {
+      expect(screen.getByRole("link", { name: "View product ↗" })).toHaveAttribute(
+        "target",
+        "_blank"
+      );
+      expect(
+        screen.getByRole("link", { name: /View the product image/ })
+      ).toHaveAttribute(
+        "target",
+        "_blank"
+      );
+    }
   });
 
   it("can be restarted after finishing", () => {

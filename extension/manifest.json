@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.uniqlo.com/*"],
-      "js": ["content.js"],
+      "js": ["confetti.browser.js", "content.js"],
       "run_at": "document_idle"
     }
   ],

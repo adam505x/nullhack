@@ -17,6 +17,10 @@ if (!fs.existsSync(path.join(DIST, "index.html"))) {
 
 fs.copyFileSync(path.join(EXT, "manifest.json"), path.join(DIST, "manifest.json"));
 fs.copyFileSync(path.join(EXT, "content.js"), path.join(DIST, "content.js"));
+fs.copyFileSync(
+  path.join(ROOT, "node_modules", "canvas-confetti", "dist", "confetti.browser.js"),
+  path.join(DIST, "confetti.browser.js")
+);
 fs.cpSync(path.join(EXT, "icons"), path.join(DIST, "icons"), { recursive: true });
 
 console.log("Extension assembled in dist/.");

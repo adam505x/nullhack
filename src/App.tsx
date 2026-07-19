@@ -1,4 +1,5 @@
-import { useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
+import confetti from "canvas-confetti";
 import { ArtematorEngine } from "./engine/engine";
 import type { Answer, Catalog, EngineState, Item } from "./engine/types";
 import catalogJson from "./data/catalog.json";
@@ -10,6 +11,8 @@ type Pose = "idle" | "waiting" | "thinking" | "focus" | "reveal";
 // While asking, the genie cycles through poses every couple of questions so he
 // feels alive; "focus" is reserved for when he's closing in on an answer.
 const ASKING_CYCLE: Pose[] = ["waiting", "thinking", "idle"];
+const IDLE_CUE_DELAY = 15_000;
+const IDLE_CUE_LENGTH = 1_400;
 
 function poseFor(state: EngineState): Pose {
   if (state.status === "won") return "idle"; // arms crossed, proud
@@ -28,14 +31,40 @@ const ANSWERS: { value: Answer; label: string }[] = [
 ];
 
 function ItemCard({ item, large }: { item: Item; large?: boolean }) {
+  const imageFrame = (
+    <div className="item-card__frame">
+      <img src={item.image} alt={item.name} />
+    </div>
+  );
+
   return (
     <figure className={`item-card${large ? " item-card--large" : ""}`}>
-      <div className="item-card__frame">
-        <img src={item.image} alt={item.name} />
-      </div>
+      {item.url ? (
+        <a
+          className="item-card__image-link"
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View the product image for ${item.name}`}
+        >
+          {imageFrame}
+        </a>
+      ) : (
+        imageFrame
+      )}
       <figcaption>
         <span className="item-card__type">{item.articleType}</span>
         <span className="item-card__name">{item.name}</span>
+        {item.url && (
+          <a
+            className="item-card__link"
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View product ↗
+          </a>
+        )}
       </figcaption>
     </figure>
   );
@@ -50,6 +79,48 @@ function Bubble({ children }: { children: React.ReactNode }) {
   );
 }
 
+function Mascot({ pose, imageOverride }: { pose: Pose; imageOverride?: string }) {
+  const [displayPose, setDisplayPose] = useState(pose);
+  const [previousPose, setPreviousPose] = useState<Pose | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    if (pose === displayPose) return;
+
+    setPreviousPose(displayPose);
+    setDisplayPose(pose);
+    setIsTransitioning(false);
+
+    const frame = requestAnimationFrame(() => setIsTransitioning(true));
+    const timeout = window.setTimeout(() => setPreviousPose(null), 180);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
+  }, [displayPose, pose]);
+
+  return (
+    <div className="genie" data-pose={pose}>
+      {previousPose && (
+        <img
+          className={`genie__image genie__image--previous${isTransitioning ? " is-transitioning" : ""}`}
+          src={`/artem/${previousPose}.webp`}
+          alt=""
+          aria-hidden="true"
+        />
+      )}
+        <img
+          className={`genie__image genie__image--current${previousPose && !isTransitioning ? " is-pending" : ""}${isTransitioning ? " is-transitioning" : ""}`}
+          src={imageOverride ?? `/artem/${displayPose}.webp`}
+        alt="The Artemator genie"
+        data-testid="mascot"
+        data-pose={pose}
+      />
+    </div>
+  );
+}
+
 export default function App() {
   const engine = useMemo(
     () => new ArtematorEngine(catalog, { rng: Math.random }),
@@ -59,6 +130,68 @@ export default function App() {
 
   const state = engine.state;
   const pose = poseFor(state);
+  const [isWhistleReaction, setIsWhistleReaction] = useState(false);
+
+  useEffect(() => {
+    if (state.status !== "won") return;
+
+    if (window.self !== window.top) {
+      window.parent.postMessage({ source: "artemator", type: "won" }, "*");
+      return;
+    }
+
+    void confetti({
+      particleCount: 120,
+      spread: 72,
+      startVelocity: 32,
+      origin: { y: 0.62 },
+      colors: ["#b08d4c", "#141414", "#e5e5e5"],
+      disableForReducedMotion: true,
+    });
+  }, [state.status]);
+
+  useEffect(() => {
+    if (window.self === window.top) return;
+
+    const cue = new Audio("/sounds/whistle-snap.mp3");
+    cue.preload = "auto";
+    cue.volume = 1;
+    let idleTimer: number | undefined;
+    let stopTimer: number | undefined;
+    let hasPlayed = false;
+
+    const clearTimers = () => {
+      if (idleTimer !== undefined) window.clearTimeout(idleTimer);
+      if (stopTimer !== undefined) window.clearTimeout(stopTimer);
+    };
+
+    const scheduleCue = () => {
+      if (hasPlayed) return;
+      if (idleTimer !== undefined) window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        hasPlayed = true;
+        setIsWhistleReaction(true);
+        cue.currentTime = 0;
+        void cue.play().catch(() => undefined);
+        stopTimer = window.setTimeout(() => {
+          cue.pause();
+          cue.currentTime = 0;
+          setIsWhistleReaction(false);
+        }, IDLE_CUE_LENGTH);
+      }, IDLE_CUE_DELAY);
+    };
+
+    window.addEventListener("pointerdown", scheduleCue);
+    scheduleCue();
+
+    return () => {
+      clearTimers();
+      cue.pause();
+      cue.currentTime = 0;
+      setIsWhistleReaction(false);
+      window.removeEventListener("pointerdown", scheduleCue);
+    };
+  }, []);
 
   const answer = (a: Answer) => {
     engine.answer(a);
@@ -82,13 +215,15 @@ export default function App() {
         )}
       </header>
 
-      <img
-        key={pose}
-        className="genie"
-        data-testid="mascot"
-        data-pose={pose}
-        src={`/artem/${pose}.webp`}
-        alt="The Artemator genie"
+      <Mascot
+        pose={pose}
+        imageOverride={
+          state.status === "won"
+            ? "/artem/confetti.webp"
+            : isWhistleReaction
+              ? "/artem/leonardo.webp"
+              : undefined
+        }
       />
 
       <main className="panel" data-status={state.status}>
@@ -107,7 +242,9 @@ export default function App() {
             <div className="confidence" aria-hidden="true">
               <div
                 className="confidence__fill"
-                style={{ width: `${Math.round(state.topProbability * 100)}%` }}
+                style={{
+                  transform: `scaleX(${state.topProbability})`,
+                }}
               />
             </div>
           </section>

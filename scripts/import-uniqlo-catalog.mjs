@@ -804,6 +804,14 @@ const rows = [
   ).values(),
 ];
 
+function germanProductUrl(productPageUrl) {
+  const url = new URL(productPageUrl);
+  if (url.hostname === "www.uniqlo.com") {
+    url.pathname = url.pathname.replace(/^\/us\/en(?=\/|$)/, "/de/en");
+  }
+  return url.toString();
+}
+
 const ROUTING_IDS = new Set([
   "wearTop",
   "wearBottom",
@@ -851,6 +859,7 @@ const items = rows.map((row) => {
     image: fs.existsSync(path.join(ROOT, "public", "uniqlo", imageFilename))
       ? localImage
       : row.canonicalImageUrl,
+    url: germanProductUrl(row.productPageUrl),
     tags,
   };
 });
