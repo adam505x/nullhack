@@ -9,9 +9,12 @@
     "build:ext": "npm run build && node scripts/build-extension.mjs",
     "preview": "vite preview",
     "test": "vitest run",
+    "stats": "node --experimental-strip-types scripts/stats.mjs",
     "test:uniqlo": "node --import tsx --test test/uniqlo-importer.test.ts",
     "typecheck:uniqlo": "tsc -p tsconfig.uniqlo.json",
     "catalog": "node scripts/build-catalog.mjs",
+    "catalog:uniqlo": "node scripts/import-uniqlo-catalog.mjs",
+    "images:uniqlo": "node scripts/build-uniqlo-webp.mjs",
     "import:uniqlo": "tsx src/uniqlo-cli.ts",
     "download:uniqlo-images": "tsx src/download-uniqlo-images.ts",
     "categorize:uniqlo": "tsx src/uniqlo-categorizer.ts"

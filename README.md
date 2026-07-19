@@ -17,18 +17,22 @@ no), so one odd answer demotes an item without killing it. When the
 front-runner passes the confidence threshold the genie guesses; a rejection
 zeroes that item and the search continues.
 
-Simulated across the whole catalog, the engine finds the target item **100% of
-the time, median 8 questions** (`node --experimental-strip-types scripts/stats.mjs`).
+The current Uniqlo catalog simulation reaches its first guess in a **median 8
+questions**, finishes successful games in a **median 10 questions**, and finds
+**97%+ of distinguishable products** (`npm run stats`).
 
 ## The data
 
-- **Items + photos + objective attributes** come from the
+- The checked-in catalog contains **1,290 deduplicated Uniqlo product/color
+  candidates** imported from the generated Uniqlo JSONL snapshot. Each
+  candidate has one optimized local 600×800 WebP.
+- Objective family, construction, color, and subtype clues are derived
+  deterministically from product metadata. Existing soft style weights are
+  preserved, and uncertain objective clues remain unknown.
+- The original demo catalog can still be rebuilt from the
   [Fashion Product Images dataset](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-dataset)
   via its [900×1200 HuggingFace mirror](https://huggingface.co/datasets/benitomartin/fashion-product-images-small-900x1200)
   — 52 curated items across ~23 garment types (`scripts/build-catalog.mjs`).
-- **Subjective style attributes** (statement vs minimal, streetwear vs classic,
-  office-ok, night-out, fit, luxe…) were manufactured with Claude and live in
-  `scripts/subjective-overrides.json`, merged over heuristic defaults.
 - Catalog photos are retail catalog images — fine for a demo, not for shipping.
 - Runtime catalog and mascot assets are stored as WebP to keep the app and
   extension bundle small.
@@ -68,6 +72,8 @@ and unrelated URLs.
 npm run import:uniqlo -- --output ./data
 npm run download:uniqlo-images -- --output ./data
 npm run categorize:uniqlo
+npm run catalog:uniqlo -- data/uniqlo-catalogue-categorized.jsonl
+npm run images:uniqlo
 npm run test:uniqlo
 npm run typecheck:uniqlo
 ```
@@ -85,11 +91,35 @@ product data. Generated files include:
 - `data/uniqlo-images/`: deduplicated downloaded assets.
 - `data/uniqlo-images-manifest.json`: source and local image mappings.
 - `data/uniqlo-catalogue-categorized.jsonl`: engine-ready attribute weights.
+- `data/uniqlo-webp-manifest.json`: canonical WebP paths, hashes, and source
+  provenance.
 
 The full catalog can require thousands of files and substantial disk space.
 Retrieved catalog data and images are for prototype/research use only; ensure
 your use complies with UNIQLO's terms, robots guidance, applicable law, and
 image rights.
+
+Import the generated Uniqlo weight vectors into the same engine format:
+
+```sh
+npm run catalog:uniqlo -- /path/to/uniqlo-catalogue-categorized.jsonl
+```
+
+This creates one Bayesian candidate per Uniqlo product/color variant. The
+WebP step selects only that candidate's canonical image from the ignored
+multi-gigabyte source archive, strips metadata, resizes it, and writes the
+compact runtime assets to `public/uniqlo/`. The importer derives normalized
+product families, construction details, broad color families, exact colors,
+and scoped late-game clues for dense categories such as graphic T-shirts,
+eyewear, shirts, pants, and underwear. Alternate prompt wording remains one
+Bayesian evidence dimension.
+
+The engine balances initial probability across product families, prioritizes
+broad routing questions, paces repeated topics, and asks exact colors only
+after a broader color clue. Importing also writes
+`docs/uniqlo-catalog-report.json` with family coverage and duplicate-vector
+diagnostics. Rule exceptions can be checked into
+`scripts/uniqlo-overrides.json`.
 
 ## Repo map
 
@@ -99,6 +129,7 @@ image rights.
 - `src/data/catalog.json` — generated item catalog with attribute vectors
 - `src/uniqlo-*.ts` — UNIQLO import and categorization pipeline
 - `scripts/build-catalog.mjs` — HuggingFace → catalog pipeline
+- `scripts/build-uniqlo-webp.mjs` — canonical Uniqlo image → local runtime WebP
 - `scripts/clean_mascots.py`, `scripts/mascot_alpha.py` — mascot cleanup tools
 - `scripts/screenshot.mjs` — real-browser visual smoke test (Chrome/Edge via playwright-core)
 - `public/artem/` — the genie's five WebP moods
